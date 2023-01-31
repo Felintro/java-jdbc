@@ -14,6 +14,7 @@ public class TestaListagem {
         Connection connection = connectionFactory.recuperaConexao();
 
         PreparedStatement pstmt = connection.prepareStatement("SELECT id_produto, ds_nome, ds_descricao FROM produto");
+        pstmt.execute();
 
         ResultSet rst = pstmt.getResultSet();
 
