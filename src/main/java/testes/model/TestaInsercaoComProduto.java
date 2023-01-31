@@ -6,6 +6,7 @@ package testes.model;
  */
 
 import dao.ProdutoDAO;
+import factory.ConnectionFactory;
 import model.Produto;
 
 import java.sql.Connection;
@@ -19,10 +20,7 @@ public class TestaInsercaoComProduto {
 
         try(Connection connection = new ConnectionFactory().recuperaConexao()) {
             ProdutoDAO dao = new ProdutoDAO(connection);
-
             dao.insertProduto(produto);
-
-            System.out.println(dao.findProdutoById(produto.getId()).toString());
         }
 
     }

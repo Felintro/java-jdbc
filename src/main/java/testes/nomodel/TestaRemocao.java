@@ -16,7 +16,7 @@ public class TestaRemocao {
         ConnectionFactory factory = new ConnectionFactory();
         Connection connection = factory.recuperaConexao();
 
-        Integer idProduto = 10;
+        int idProduto = 10;
 
         PreparedStatement pstmt = connection.prepareStatement("DELETE FROM produto p WHERE p.id_produto > ?");
         pstmt.setInt(1, idProduto);

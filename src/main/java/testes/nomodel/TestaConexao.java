@@ -5,6 +5,8 @@ package testes.nomodel;
  * Data: 27/01/2023
  */
 
+import factory.ConnectionFactory;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 
