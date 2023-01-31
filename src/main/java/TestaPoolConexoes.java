@@ -15,7 +15,5 @@ public class TestaPoolConexoes {
             connectionFactory.recuperaConexao();
             System.out.println("Conexão nº: " + i);
         }
-
-
     }
 }
