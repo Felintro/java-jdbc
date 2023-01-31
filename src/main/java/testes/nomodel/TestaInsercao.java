@@ -1,4 +1,4 @@
-
+package testes.nomodel;
 /*
  * @author allfel
  *

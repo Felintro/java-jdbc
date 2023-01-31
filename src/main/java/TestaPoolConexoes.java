@@ -5,6 +5,8 @@
  * Data: 31/01/2023
  */
 
+import factory.ConnectionFactory;
+
 import java.sql.SQLException;
 
 public class TestaPoolConexoes {

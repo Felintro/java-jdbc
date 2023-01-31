@@ -1,9 +1,11 @@
-
+package testes.nomodel;
 /*
  * @author allfel
  *
  * Data: 30/01/2023
  */
+
+import factory.ConnectionFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
