@@ -35,9 +35,5 @@ public class TestaInsercaoComParametro {
         pstmt.setString(2, descricaoProduto);
 
         pstmt.execute();
-
-        if(nomeProduto.equalsIgnoreCase("NOTEBOOK DELL")) {
-            throw new RuntimeException("Não foi possível inserir o produto!");
-        }
     }
 }
