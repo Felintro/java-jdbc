@@ -6,6 +6,7 @@ package dao;
  */
 
 import lombok.AllArgsConstructor;
+import model.Categoria;
 import model.Produto;
 
 import java.sql.*;
@@ -19,6 +20,7 @@ public class ProdutoDAO {
     private static final String SQL_INSERT_PRODUTO = "INSERT INTO produto (ds_nome, ds_descricao) VALUES (?, ?);";
     private static final String SQL_SELECT_PRODUTO_BY_ID = "SELECT * FROM produto p WHERE p.id_produto = ?";
     private static final String SQL_SELECT_PRODUTO_ALL = "SELECT * FROM produto;";
+    private static final String SQL_SELECT_PRODUTO_BY_CATEGORIA = "SELECT * FROM produto p WHERE p.id_categoria = ?;";
 
     public void insertProduto(Produto produto) throws SQLException {
         try(PreparedStatement pstmt = connection.prepareStatement(SQL_INSERT_PRODUTO, Statement.RETURN_GENERATED_KEYS)) {
@@ -76,4 +78,28 @@ public class ProdutoDAO {
 
     }
 
+    public List<Produto> findProdutoByCategoria(Categoria categoria) throws SQLException {
+        List<Produto> produtos = new ArrayList<>();
+
+        try(PreparedStatement pstmt = connection.prepareStatement(SQL_SELECT_PRODUTO_BY_CATEGORIA)) {
+            pstmt.setInt(1, categoria.getId());
+            ResultSet rst = pstmt.executeQuery();
+
+            while(rst.next()) {
+                int idProduto = rst.getInt("id_produto");
+                String nomeProduto = rst.getString("ds_nome");
+                String descricaoProduto = rst.getString("ds_descricao");
+
+                Produto produto = new Produto(idProduto, nomeProduto, descricaoProduto);
+
+                produtos.add(produto);
+            }
+        }
+
+        return produtos;
+
+
+
+
+    }
 }
