@@ -17,6 +17,9 @@ public class TestaListagemComProduto {
         try(Connection connection = new ConnectionFactory().recuperaConexao()) {
             ProdutoDAO dao = new ProdutoDAO(connection);
             System.out.println(dao.findAllProdutos());
+            System.out.println("=====================================================================");
+            System.out.println(dao.findProdutoById(5));
+
         }
     }
 
