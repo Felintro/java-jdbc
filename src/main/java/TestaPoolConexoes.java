@@ -9,6 +9,7 @@ import factory.ConnectionFactory;
 
 import java.sql.SQLException;
 
+@Deprecated
 public class TestaPoolConexoes {
     public static void main(String[] args) throws SQLException {
         ConnectionFactory connectionFactory= new ConnectionFactory();
