@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+@Deprecated
 public class TestaInsercaoComParametro {
     public static void main(String[] args) throws SQLException {
 

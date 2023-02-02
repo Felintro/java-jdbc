@@ -11,6 +11,7 @@ import factory.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+@Deprecated
 public class TestaListagemComProduto {
 
     public static void main(String[] args) throws SQLException {

@@ -9,6 +9,7 @@ import factory.ConnectionFactory;
 
 import java.sql.*;
 
+@Deprecated
 public class TestaInsercao {
     public static void main(String[] args) throws SQLException {
         ConnectionFactory factory = new ConnectionFactory();

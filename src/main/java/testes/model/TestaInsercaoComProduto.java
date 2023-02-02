@@ -12,6 +12,7 @@ import model.Produto;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+@Deprecated
 public class TestaInsercaoComProduto {
 
     public static void main(String[] args) throws SQLException {
