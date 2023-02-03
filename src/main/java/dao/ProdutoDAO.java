@@ -24,7 +24,7 @@ public class ProdutoDAO {
 
 
 
-    public Produto insertProduto(Produto produto) {
+    public void insertProduto(Produto produto) {
         try{
             try(PreparedStatement pstmt = connection.prepareStatement(SQL_INSERT_PRODUTO, Statement.RETURN_GENERATED_KEYS)) {
                 pstmt.setString(1, produto.getNome());
@@ -39,8 +39,6 @@ public class ProdutoDAO {
                     }
                 }
             }
-
-            return produto;
 
         } catch(SQLException ex) {
             throw new RuntimeException(ex);
@@ -64,26 +62,28 @@ public class ProdutoDAO {
         return produto;
     }
 
-    public List<Produto> findAllProdutos() throws SQLException {
-        List<Produto> produtos = new ArrayList<>();
+    public List<Produto> findAllProdutos() {
+        try {
+            List<Produto> produtos = new ArrayList<>();
 
-        try(PreparedStatement pstmt = connection.prepareStatement(SQL_SELECT_PRODUTO_ALL)) {
-            ResultSet rst = pstmt.executeQuery();
+            try(PreparedStatement pstmt = connection.prepareStatement(SQL_SELECT_PRODUTO_ALL)) {
+                ResultSet rst = pstmt.executeQuery();
 
-            while(rst.next()) {
-                int idProduto = rst.getInt("id_produto");
-                String nomeProduto = rst.getString("ds_nome");
-                String descricaoProduto = rst.getString("ds_descricao");
-                int idCategoria = rst.getInt("id_categoria");
+                while(rst.next()) {
+                    int idProduto = rst.getInt("id_produto");
+                    String nomeProduto = rst.getString("ds_nome");
+                    String descricaoProduto = rst.getString("ds_descricao");
+                    int idCategoria = rst.getInt("id_categoria");
+                    Produto produto = new Produto(idProduto, nomeProduto, descricaoProduto, idCategoria);
 
-                Produto produto = new Produto(idProduto, nomeProduto, descricaoProduto, idCategoria);
-
-                produtos.add(produto);
+                    produtos.add(produto);
+                }
             }
+            return produtos;
+
+        } catch(SQLException ex) {
+            throw new RuntimeException(ex);
         }
-
-        return produtos;
-
     }
 
     public List<Produto> findProdutoByCategoria(Categoria categoria) throws SQLException {
