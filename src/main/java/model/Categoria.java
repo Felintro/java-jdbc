@@ -31,4 +31,9 @@ public class Categoria {
     public void adicionarProduto(Produto produto) {
         produtos.add(produto);
     }
+
+    @Override
+    public String toString() {
+        return id + " - " + nome;
+    }
 }
