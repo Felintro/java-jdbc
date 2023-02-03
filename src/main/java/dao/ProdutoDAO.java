@@ -22,24 +22,29 @@ public class ProdutoDAO {
     private static final String SQL_SELECT_PRODUTO_ALL = "SELECT * FROM produto;";
     private static final String SQL_SELECT_PRODUTO_BY_CATEGORIA = "SELECT * FROM produto p WHERE p.id_categoria = ?;";
 
-    public void insertProduto(Produto produto) throws SQLException {
-        try(PreparedStatement pstmt = connection.prepareStatement(SQL_INSERT_PRODUTO, Statement.RETURN_GENERATED_KEYS)) {
-            pstmt.setString(1, produto.getNome());
-            pstmt.setString(2, produto.getDescricao());
-            pstmt.setInt(3, produto.getIdCategoria());
 
-            pstmt.execute();
 
-            try(ResultSet rst = pstmt.getGeneratedKeys()) {
-                while(rst.next()) {
-                    produto.setId(rst.getInt(1));
+    public Produto insertProduto(Produto produto) {
+        try{
+            try(PreparedStatement pstmt = connection.prepareStatement(SQL_INSERT_PRODUTO, Statement.RETURN_GENERATED_KEYS)) {
+                pstmt.setString(1, produto.getNome());
+                pstmt.setString(2, produto.getDescricao());
+                pstmt.setInt(3, produto.getIdCategoria());
+
+                pstmt.execute();
+
+                try(ResultSet rst = pstmt.getGeneratedKeys()) {
+                    while(rst.next()) {
+                        produto.setId(rst.getInt(1));
+                    }
                 }
             }
+
+            return produto;
+
+        } catch(SQLException ex) {
+            throw new RuntimeException(ex);
         }
-
-        System.out.println("Produto salvo com sucesso:");
-        System.out.println(String.format("%d - %s - %s", produto.getId(), produto.getNome(), produto.getDescricao()));
-
     }
 
     public Produto findProdutoById(int idProduto) throws SQLException {

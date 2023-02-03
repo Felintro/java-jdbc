@@ -6,19 +6,32 @@ package controller;
  * Data: 02/02/2023
  */
 
+import dao.ProdutoDAO;
+import factory.ConnectionFactory;
 import model.Produto;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProdutoController {
+
+	private ProdutoDAO produtoDAO;
+
+	public ProdutoController() {
+		Connection connection = new ConnectionFactory().recuperaConexao();
+		this.produtoDAO = new ProdutoDAO(connection);
+	}
 
 	public void deletar(Integer id) {
 		System.out.println("Deletando produto");
 	}
 
 	public void salvar(Produto produto) {
-		System.out.println("Salvando produto");
+		System.out.println("Salvando produto...");
+		Produto produtoSalvo = produtoDAO.insertProduto(produto);
+		System.out.println("Produto salvo com sucesso:");
+		System.out.println(String.format("%d - %s - %s", produtoSalvo.getId(), produtoSalvo.getNome(), produtoSalvo.getDescricao()));
 	}
 
 	public List<Produto> listar() {
