@@ -9,10 +9,7 @@ import lombok.AllArgsConstructor;
 import model.Categoria;
 import model.Produto;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +17,7 @@ import java.util.List;
 public class CategoriaDAO {
 
     private Connection connection;
-    private static final String SQL_INSERT_CATEGORIA = "INSERT INTO produto (ds_nome, ds_descricao) VALUES (?, ?);";
+    private static final String SQL_INSERT_CATEGORIA = "INSERT INTO categoria (ds_nome) VALUES (?);";
     private static final String SQL_SELECT_CATEGORIA_BY_ID = "SELECT * FROM produto p WHERE p.id_produto = ?";
     private static final String SQL_SELECT_CATEGORIA_ALL = "SELECT * FROM categoria;";
     private static final String SQL_SELECT_CATEGORIA_JOIN_PRODUTO = " SELECT c.id_categoria c_id_categoria, c.ds_nome c_ds_nome, " +
@@ -77,6 +74,24 @@ public class CategoriaDAO {
             }
         }
         return categorias;
+    }
+
+    public void insertCategoria(Categoria categoria) {
+        try {
+            try(PreparedStatement pstmt = connection.prepareStatement(SQL_INSERT_CATEGORIA, Statement.RETURN_GENERATED_KEYS)) {
+                pstmt.setString(1, categoria.getNome());
+                pstmt.execute();
+
+                try(ResultSet rst = pstmt.getGeneratedKeys()){
+                    while(rst.next()) {
+                        categoria.setId(rst.getInt(1));
+                    }
+                }
+            }
+
+        } catch(SQLException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
 }
