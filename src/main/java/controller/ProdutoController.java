@@ -22,10 +22,8 @@ public class ProdutoController {
 	}
 
 	public List<Produto> listar() {
-		List<Produto> produtos =
-			new ArrayList<>();
-		produtos.add(new Produto("Nome do Produto de teste"
-				, "Descrição do produto de teste"));
+		List<Produto> produtos = new ArrayList<>();
+		produtos.add(new Produto("Nome do Produto de teste", "Descrição do produto de teste"));
 		return produtos;
 	}
 
