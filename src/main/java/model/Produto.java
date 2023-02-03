@@ -19,6 +19,7 @@ public class Produto {
     private Integer id;
     private String nome;
     private String descricao;
+    private Integer idCategoria;
 
 
     public Produto(String nome, String descricao) {

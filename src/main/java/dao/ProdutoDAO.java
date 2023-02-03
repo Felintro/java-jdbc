@@ -17,7 +17,7 @@ import java.util.List;
 public class ProdutoDAO {
 
     private Connection connection;
-    private static final String SQL_INSERT_PRODUTO = "INSERT INTO produto (ds_nome, ds_descricao) VALUES (?, ?);";
+    private static final String SQL_INSERT_PRODUTO = "INSERT INTO produto (ds_nome, ds_descricao, id_categoria) VALUES (?, ?, ?);";
     private static final String SQL_SELECT_PRODUTO_BY_ID = "SELECT * FROM produto p WHERE p.id_produto = ?";
     private static final String SQL_SELECT_PRODUTO_ALL = "SELECT * FROM produto;";
     private static final String SQL_SELECT_PRODUTO_BY_CATEGORIA = "SELECT * FROM produto p WHERE p.id_categoria = ?;";
@@ -26,6 +26,7 @@ public class ProdutoDAO {
         try(PreparedStatement pstmt = connection.prepareStatement(SQL_INSERT_PRODUTO, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, produto.getNome());
             pstmt.setString(2, produto.getDescricao());
+            pstmt.setInt(3, produto.getIdCategoria());
 
             pstmt.execute();
 
@@ -52,6 +53,7 @@ public class ProdutoDAO {
                 produto.setId(rst.getInt("id_produto"));
                 produto.setNome(rst.getString("ds_nome"));
                 produto.setDescricao(rst.getString("ds_descricao"));
+                produto.setIdCategoria(rst.getInt("id_categoria"));
             }
         }
         return produto;
@@ -67,8 +69,9 @@ public class ProdutoDAO {
                 int idProduto = rst.getInt("id_produto");
                 String nomeProduto = rst.getString("ds_nome");
                 String descricaoProduto = rst.getString("ds_descricao");
+                int idCategoria = rst.getInt("id_categoria");
 
-                Produto produto = new Produto(idProduto, nomeProduto, descricaoProduto);
+                Produto produto = new Produto(idProduto, nomeProduto, descricaoProduto, idCategoria);
 
                 produtos.add(produto);
             }
@@ -89,8 +92,9 @@ public class ProdutoDAO {
                 int idProduto = rst.getInt("id_produto");
                 String nomeProduto = rst.getString("ds_nome");
                 String descricaoProduto = rst.getString("ds_descricao");
+                int idCategoria = rst.getInt("id_categoria");
 
-                Produto produto = new Produto(idProduto, nomeProduto, descricaoProduto);
+                Produto produto = new Produto(idProduto, nomeProduto, descricaoProduto, idCategoria);
 
                 produtos.add(produto);
             }
