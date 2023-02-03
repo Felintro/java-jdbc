@@ -5,6 +5,7 @@ package dao;
  * Data: 01/02/2023
  */
 
+import lombok.AllArgsConstructor;
 import model.Categoria;
 import model.Produto;
 
@@ -15,6 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@AllArgsConstructor
 public class CategoriaDAO {
 
     private Connection connection;
@@ -22,14 +24,10 @@ public class CategoriaDAO {
     private static final String SQL_SELECT_CATEGORIA_BY_ID = "SELECT * FROM produto p WHERE p.id_produto = ?";
     private static final String SQL_SELECT_CATEGORIA_ALL = "SELECT * FROM categoria;";
     private static final String SQL_SELECT_CATEGORIA_JOIN_PRODUTO = " SELECT c.id_categoria c_id_categoria, c.ds_nome c_ds_nome, " +
-        " p.id_produto p_id_produto, p.ds_nome p_ds_nome, " +
-        " p.ds_descricao p_ds_descricao, p.id_categoria p_id_categoria " +
-        " FROM categoria c, produto p " +
-        " WHERE c.id_categoria = p.id_categoria;";
-
-    public CategoriaDAO(Connection connection) {
-        this.connection = connection;
-    }
+                                                                    " p.id_produto p_id_produto, p.ds_nome p_ds_nome, " +
+                                                                    " p.ds_descricao p_ds_descricao, p.id_categoria p_id_categoria " +
+                                                                    " FROM categoria c, produto p " +
+                                                                    " WHERE c.id_categoria = p.id_categoria;";
 
     public List<Categoria> findAllCategorias() {
         try {
@@ -67,16 +65,18 @@ public class CategoriaDAO {
                         ultima = categoria;
                         categorias.add(categoria);
                     }
-                    Produto produto = new Produto(rst.getInt("p_id_produto"), rst.getString("p_ds_nome"), rst.getString("p_ds_descricao"));
+
+                    Integer idProduto = rst.getInt("p_id_produto");
+                    String nomeProduto = rst.getString("p_ds_nome");
+                    String descricaoProduto = rst.getString("p_ds_descricao");
+                    Integer idCategoriaProduto = rst.getInt("p_id_categoria");
+                    Produto produto = new Produto(idProduto, nomeProduto, descricaoProduto, idCategoriaProduto);
+
                     ultima.adicionarProduto(produto);
                 }
             }
-
         }
-
         return categorias;
-
     }
-
 
 }
