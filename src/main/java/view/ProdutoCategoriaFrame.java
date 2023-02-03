@@ -55,7 +55,7 @@ public class ProdutoCategoriaFrame extends JFrame {
 
         textoNome = new JTextField();
         textoDescricao = new JTextField();
-        comboCategoria = new JComboBox<Categoria>();
+        comboCategoria = new JComboBox<>();
 
         comboCategoria.addItem(new Categoria(0, "Selecione"));
         List<Categoria> categorias = this.listarCategoria();
