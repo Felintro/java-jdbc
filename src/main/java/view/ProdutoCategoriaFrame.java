@@ -23,7 +23,7 @@ public class ProdutoCategoriaFrame extends JFrame {
     private JLabel labelNome, labelDescricao, labelCategoria, labelNomeCategoria;
     private JTextField textoNome, textoDescricao, textoNomeCategoria;
     private JComboBox<Categoria> comboCategoria;
-    private JButton botaoSalvar, botaoAlterar, botaoLimpar, botarApagar, botaoSalvarCategoria;
+    private JButton botaoSalvarProduto, botaoAlterarProduto, botaoLimparProduto, botarApagarProduto, botaoSalvarCategoria;
     private JTable tabela;
     private DefaultTableModel modelo;
     private ProdutoController produtoController;
@@ -74,16 +74,16 @@ public class ProdutoCategoriaFrame extends JFrame {
         container.add(textoNomeCategoria);
         container.add(comboCategoria);
 
-        botaoSalvar = new JButton("Salvar Produto");
+        botaoSalvarProduto = new JButton("Salvar Produto");
         botaoSalvarCategoria = new JButton("Salvar Categoria");
-        botaoLimpar = new JButton("Limpar");
+        botaoLimparProduto = new JButton("Limpar");
 
-        botaoSalvar.setBounds(10, 145, 80, 20);
+        botaoSalvarProduto.setBounds(10, 145, 80, 20);
         botaoSalvarCategoria.setBounds(400, 50, 160, 20);
-        botaoLimpar.setBounds(100, 145, 80, 20);
+        botaoLimparProduto.setBounds(100, 145, 80, 20);
 
-        container.add(botaoSalvar);
-        container.add(botaoLimpar);
+        container.add(botaoSalvarProduto);
+        container.add(botaoLimparProduto);
         container.add(botaoSalvarCategoria);
 
         tabela = new JTable();
@@ -98,40 +98,40 @@ public class ProdutoCategoriaFrame extends JFrame {
         tabela.setBounds(10, 185, 760, 300);
         container.add(tabela);
 
-        botarApagar = new JButton("Excluir");
-        botaoAlterar = new JButton("Alterar");
+        botarApagarProduto = new JButton("Excluir");
+        botaoAlterarProduto = new JButton("Alterar");
 
-        botarApagar.setBounds(10, 500, 80, 20);
-        botaoAlterar.setBounds(100, 500, 80, 20);
+        botarApagarProduto.setBounds(10, 500, 80, 20);
+        botaoAlterarProduto.setBounds(100, 500, 80, 20);
 
-        container.add(botarApagar);
-        container.add(botaoAlterar);
+        container.add(botarApagarProduto);
+        container.add(botaoAlterarProduto);
 
         setSize(800, 600);
         setVisible(true);
         setLocationRelativeTo(null);
 
-        botaoSalvar.addActionListener(
+        botaoSalvarProduto.addActionListener(
             e -> {
-                salvar();
+                salvarProduto();
                 limparTabela();
                 preencherTabela();
             }
         );
 
-        botaoLimpar.addActionListener(
+        botaoLimparProduto.addActionListener(
             e -> limpar()
         );
 
-        botarApagar.addActionListener(
+        botarApagarProduto.addActionListener(
             e -> {
-                deletar();
+                deletarProduto();
                 limparTabela();
                 preencherTabela();
             }
         );
 
-        botaoAlterar.addActionListener(
+        botaoAlterarProduto.addActionListener(
             e -> {
                 alterar();
                 limparTabela();
@@ -172,7 +172,7 @@ public class ProdutoCategoriaFrame extends JFrame {
         }
     }
 
-    private void deletar() {
+    private void deletarProduto() {
         Object objetoDaLinha = (Object) modelo.getValueAt(tabela.getSelectedRow(), tabela.getSelectedColumn());
         if(objetoDaLinha instanceof Integer) {
             Integer id = (Integer) objetoDaLinha;
@@ -188,7 +188,7 @@ public class ProdutoCategoriaFrame extends JFrame {
         List<Produto> produtos = listarProduto();
         try {
             for(Produto produto : produtos) {
-                modelo.addRow(new Object[]{produto.getId(), produto.getNome(), produto.getDescricao()});
+                modelo.addRow(new Object[]{produto.getId(), produto.getNome(), produto.getDescricao(), produto.getCategoria()});
             }
         } catch(Exception e) {
             throw e;
@@ -199,8 +199,8 @@ public class ProdutoCategoriaFrame extends JFrame {
         return this.categoriaController.listar();
     }
 
-    private void salvar() {
-        if(! textoNome.getText().equals("") && ! textoDescricao.getText().equals("")) {
+    private void salvarProduto() {
+        if(!textoNome.getText().equals("") && !textoDescricao.getText().equals("")) {
             Produto produto = new Produto(textoNome.getText(), textoDescricao.getText());
             Categoria categoria = (Categoria) comboCategoria.getSelectedItem();
             produto.setIdCategoria(categoria.getId());
