@@ -33,5 +33,10 @@ public class CategoriaController {
 		System.out.println(String.format("%d - %s", categoria.getId(), categoria.getNome()));
 	}
 
+	public void atualizar(Integer idCategoria, String novoNomeCategoria) {
+		System.out.println("Atualizando categoria...");
+		categoriaDAO.updateProdutoById(idCategoria, novoNomeCategoria);
+		System.out.println("Categoria atualizada com sucesso!");
+	}
 
 }
