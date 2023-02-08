@@ -21,7 +21,8 @@ public class ProdutoDAO {
     private static final String SQL_SELECT_PRODUTO_BY_ID = "SELECT * FROM produto p WHERE p.id_produto = ?";
     private static final String SQL_SELECT_PRODUTO_ALL = "SELECT * FROM produto;";
     private static final String SQL_SELECT_PRODUTO_BY_CATEGORIA = "SELECT * FROM produto p WHERE p.id_categoria = ?;";
-
+    private static final String SQL_UPDATE_PRODUTO_BY_ID = "UPDATE produto p SET p.ds_nome = ?, p.ds_descricao = ? WHERE p.id_produto = ?;";
+    private static final String SQL_DELETE_PRODUTO_BY_ID = "DELETE FROM produto p WHERE p.id_produto = ?;";
 
 
     public void insertProduto(Produto produto) {
@@ -86,26 +87,55 @@ public class ProdutoDAO {
         }
     }
 
-    public List<Produto> findProdutoByCategoria(Categoria categoria) throws SQLException {
-        List<Produto> produtos = new ArrayList<>();
+    public List<Produto> findProdutoByCategoria(Categoria categoria) {
+        try {
+            List<Produto> produtos = new ArrayList<>();
 
-        try(PreparedStatement pstmt = connection.prepareStatement(SQL_SELECT_PRODUTO_BY_CATEGORIA)) {
-            pstmt.setInt(1, categoria.getId());
-            ResultSet rst = pstmt.executeQuery();
+            try(PreparedStatement pstmt = connection.prepareStatement(SQL_SELECT_PRODUTO_BY_CATEGORIA)) {
+                pstmt.setInt(1, categoria.getId());
+                ResultSet rst = pstmt.executeQuery();
 
-            while(rst.next()) {
-                int idProduto = rst.getInt("id_produto");
-                String nomeProduto = rst.getString("ds_nome");
-                String descricaoProduto = rst.getString("ds_descricao");
-                int idCategoria = rst.getInt("id_categoria");
+                while(rst.next()) {
+                    int idProduto = rst.getInt("id_produto");
+                    String nomeProduto = rst.getString("ds_nome");
+                    String descricaoProduto = rst.getString("ds_descricao");
+                    int idCategoria = rst.getInt("id_categoria");
 
-                Produto produto = new Produto(idProduto, nomeProduto, descricaoProduto, idCategoria);
+                    Produto produto = new Produto(idProduto, nomeProduto, descricaoProduto, idCategoria);
 
-                produtos.add(produto);
+                    produtos.add(produto);
+                }
             }
+            return produtos;
+
+        } catch(SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public void updateProdutoById(Integer idProduto, String novoNome, String novaDescricao) {
+        try {
+            try(PreparedStatement pstmt = connection.prepareStatement(SQL_UPDATE_PRODUTO_BY_ID)) {
+                pstmt.setString(1, novoNome);
+                pstmt.setString(2, novaDescricao);
+                pstmt.setInt(3, idProduto);
+                pstmt.execute();
+            }
+        } catch(SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public void deleteProdutoById(Integer idProduto) {
+        try {
+            try(PreparedStatement pstmt = connection.prepareStatement(SQL_DELETE_PRODUTO_BY_ID)) {
+                pstmt.setInt(1, idProduto);
+                pstmt.execute();
+            }
+        } catch(SQLException ex) {
+            throw new RuntimeException(ex);
         }
 
-        return produtos;
-
     }
+
 }
