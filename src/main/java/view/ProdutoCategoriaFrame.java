@@ -149,8 +149,8 @@ public class ProdutoCategoriaFrame extends JFrame {
 
     private void atualizaComboBoxCategoria() {
         comboCategoria.removeAllItems();
-        List<Categoria> categorias = this.listarCategoria();
         comboCategoria.addItem(new Categoria(0, "Selecione"));
+        List<Categoria> categorias = this.listarCategoria();
         for(Categoria categoria : categorias) {
             comboCategoria.addItem(categoria);
         }
