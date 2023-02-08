@@ -17,13 +17,13 @@ import java.util.List;
 public class ProdutoDAO {
 
     private Connection connection;
+
     private static final String SQL_INSERT_PRODUTO = "INSERT INTO produto (ds_nome, ds_descricao, id_categoria) VALUES (?, ?, ?);";
     private static final String SQL_SELECT_PRODUTO_BY_ID = "SELECT * FROM produto p WHERE p.id_produto = ?";
     private static final String SQL_SELECT_PRODUTO_ALL = "SELECT * FROM produto;";
     private static final String SQL_SELECT_PRODUTO_BY_CATEGORIA = "SELECT * FROM produto p WHERE p.id_categoria = ?;";
     private static final String SQL_UPDATE_PRODUTO_BY_ID = "UPDATE produto p SET p.ds_nome = ?, p.ds_descricao = ? WHERE p.id_produto = ?;";
     private static final String SQL_DELETE_PRODUTO_BY_ID = "DELETE FROM produto p WHERE p.id_produto = ?;";
-
 
     public void insertProduto(Produto produto) {
         try{
