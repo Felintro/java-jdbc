@@ -35,8 +35,14 @@ public class CategoriaController {
 
 	public void atualizar(Integer idCategoria, String novoNomeCategoria) {
 		System.out.println("Atualizando categoria...");
-		categoriaDAO.updateProdutoById(idCategoria, novoNomeCategoria);
+		categoriaDAO.updateCategoriaById(idCategoria, novoNomeCategoria);
 		System.out.println("Categoria atualizada com sucesso!");
+	}
+
+	public void deletar(Integer idCategoria) {
+		System.out.println("Excluindo categoria...");
+		categoriaDAO.deleteCategoriaById(idCategoria);
+		System.out.println("Categoria excluída com sucesso!");
 	}
 
 }

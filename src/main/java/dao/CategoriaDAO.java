@@ -18,6 +18,7 @@ public class CategoriaDAO {
 
     private Connection connection;
 
+    private static final String SQL_DELETE_CATEGORIA_BY_ID = "DELETE FROM categoria c where c.id_categoria = ?";
     private static final String SQL_INSERT_CATEGORIA = "INSERT INTO categoria (ds_nome) VALUES (?);";
     private static final String SQL_UPDATE_CATEGORIA_BY_ID = "UPDATE categoria c SET c.ds_nome = ? WHERE c.id_categoria = ?;";
     private static final String SQL_SELECT_CATEGORIA_BY_ID = "SELECT * FROM produto p WHERE p.id_produto = ?";
@@ -118,7 +119,7 @@ public class CategoriaDAO {
         }
     }
 
-    public void updateProdutoById(Integer idCategoria, String novoNomeCategoria) {
+    public void updateCategoriaById(Integer idCategoria, String novoNomeCategoria) {
         try {
             try(PreparedStatement pstmt = connection.prepareStatement(SQL_UPDATE_CATEGORIA_BY_ID)) {
                 pstmt.setString(1, novoNomeCategoria);
@@ -131,9 +132,15 @@ public class CategoriaDAO {
         }
     }
 
-
-
-
-
+    public void deleteCategoriaById(Integer idCategoria) {
+        try {
+            try (PreparedStatement pstmt = connection.prepareStatement(SQL_DELETE_CATEGORIA_BY_ID)){
+                pstmt.setInt(1, idCategoria);
+                pstmt.execute();
+            }
+        } catch(SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 
 }
