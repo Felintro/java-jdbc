@@ -161,7 +161,7 @@ public class ProdutoCategoriaFrame extends JFrame {
     }
 
     private void alterar() {
-        Object objetoDaLinha = (Object) modelo.getValueAt(tabela.getSelectedRow(), tabela.getSelectedColumn());
+        Object objetoDaLinha = modelo.getValueAt(tabela.getSelectedRow(), tabela.getSelectedColumn());
         if(objetoDaLinha instanceof Integer) {
             Integer id = (Integer) objetoDaLinha;
             String nome = (String) modelo.getValueAt(tabela.getSelectedRow(), 1);
@@ -173,7 +173,7 @@ public class ProdutoCategoriaFrame extends JFrame {
     }
 
     private void deletarProduto() {
-        Object objetoDaLinha = (Object) modelo.getValueAt(tabela.getSelectedRow(), tabela.getSelectedColumn());
+        Object objetoDaLinha = modelo.getValueAt(tabela.getSelectedRow(), tabela.getSelectedColumn());
         if(objetoDaLinha instanceof Integer) {
             Integer id = (Integer) objetoDaLinha;
             this.produtoController.deletar(id);
