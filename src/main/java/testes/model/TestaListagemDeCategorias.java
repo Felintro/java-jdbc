@@ -8,7 +8,6 @@ package testes.model;
 import dao.CategoriaDAO;
 import factory.ConnectionFactory;
 import model.Categoria;
-import model.Produto;
 
 import java.sql.Connection;
 import java.sql.SQLException;
