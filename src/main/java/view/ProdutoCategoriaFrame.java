@@ -20,10 +20,10 @@ public class ProdutoCategoriaFrame extends JFrame {
 
     private static final long serialVersionUID = 1L;
 
-    private JLabel labelNome, labelDescricao, labelCategoria;
-    private JTextField textoNome, textoDescricao;
+    private JLabel labelNome, labelDescricao, labelCategoria, labelNomeCategoria;
+    private JTextField textoNome, textoDescricao, textoNomeCategoria;
     private JComboBox<Categoria> comboCategoria;
-    private JButton botaoSalvar, botaoEditar, botaoLimpar, botarApagar;
+    private JButton botaoSalvar, botaoAlterar, botaoLimpar, botarApagar, botaoSalvarCategoria;
     private JTable tabela;
     private DefaultTableModel modelo;
     private ProdutoController produtoController;
@@ -40,45 +40,51 @@ public class ProdutoCategoriaFrame extends JFrame {
         labelNome = new JLabel("Nome do Produto");
         labelDescricao = new JLabel("Descrição do Produto");
         labelCategoria = new JLabel("Categoria do Produto");
+        labelNomeCategoria = new JLabel("Nome da Categoria");
 
         labelNome.setBounds(10, 10, 240, 15);
         labelDescricao.setBounds(10, 50, 240, 15);
         labelCategoria.setBounds(10, 90, 240, 15);
+        labelNomeCategoria.setBounds(400, 10, 240, 15);
 
         labelNome.setForeground(Color.BLACK);
         labelDescricao.setForeground(Color.BLACK);
         labelCategoria.setForeground(Color.BLACK);
+        labelNomeCategoria.setForeground(Color.BLACK);
 
         container.add(labelNome);
         container.add(labelDescricao);
         container.add(labelCategoria);
+        container.add(labelNomeCategoria);
 
         textoNome = new JTextField();
         textoDescricao = new JTextField();
+        textoNomeCategoria = new JTextField();
         comboCategoria = new JComboBox<>();
 
-        comboCategoria.addItem(new Categoria(0, "Selecione"));
-        List<Categoria> categorias = this.listarCategoria();
-        for(Categoria categoria : categorias) {
-            comboCategoria.addItem(categoria);
-        }
+        atualizaComboBoxCategoria();
 
         textoNome.setBounds(10, 25, 265, 20);
         textoDescricao.setBounds(10, 65, 265, 20);
+        textoNomeCategoria.setBounds(400, 25, 265, 20);
         comboCategoria.setBounds(10, 105, 265, 20);
 
         container.add(textoNome);
         container.add(textoDescricao);
+        container.add(textoNomeCategoria);
         container.add(comboCategoria);
 
-        botaoSalvar = new JButton("Salvar");
+        botaoSalvar = new JButton("Salvar Produto");
+        botaoSalvarCategoria = new JButton("Salvar Categoria");
         botaoLimpar = new JButton("Limpar");
 
         botaoSalvar.setBounds(10, 145, 80, 20);
+        botaoSalvarCategoria.setBounds(400, 50, 160, 20);
         botaoLimpar.setBounds(100, 145, 80, 20);
 
         container.add(botaoSalvar);
         container.add(botaoLimpar);
+        container.add(botaoSalvarCategoria);
 
         tabela = new JTable();
         modelo = (DefaultTableModel) tabela.getModel();
@@ -93,13 +99,13 @@ public class ProdutoCategoriaFrame extends JFrame {
         container.add(tabela);
 
         botarApagar = new JButton("Excluir");
-        botaoEditar = new JButton("Alterar");
+        botaoAlterar = new JButton("Alterar");
 
         botarApagar.setBounds(10, 500, 80, 20);
-        botaoEditar.setBounds(100, 500, 80, 20);
+        botaoAlterar.setBounds(100, 500, 80, 20);
 
         container.add(botarApagar);
-        container.add(botaoEditar);
+        container.add(botaoAlterar);
 
         setSize(800, 600);
         setVisible(true);
@@ -125,13 +131,29 @@ public class ProdutoCategoriaFrame extends JFrame {
             }
         );
 
-        botaoEditar.addActionListener(
+        botaoAlterar.addActionListener(
             e -> {
                 alterar();
                 limparTabela();
                 preencherTabela();
             }
         );
+
+        botaoSalvarCategoria.addActionListener(
+            e -> {
+                salvarCategoria();
+                atualizaComboBoxCategoria();
+            }
+        );
+    }
+
+    private void atualizaComboBoxCategoria() {
+        comboCategoria.removeAllItems();
+        List<Categoria> categorias = this.listarCategoria();
+        comboCategoria.addItem(new Categoria(0, "Selecione"));
+        for(Categoria categoria : categorias) {
+            comboCategoria.addItem(categoria);
+        }
     }
 
     private void limparTabela() {
@@ -190,6 +212,18 @@ public class ProdutoCategoriaFrame extends JFrame {
         }
     }
 
+    private void salvarCategoria() {
+        if(!textoNomeCategoria.getText().equals("")) {
+            Categoria categoria = new Categoria();
+            categoria.setNome(textoNomeCategoria.getText());
+            this.categoriaController.salvar(categoria);
+            JOptionPane.showMessageDialog(this, "Categoria salva com sucesso!");
+            this.limparCategoria();
+        } else {
+            JOptionPane.showMessageDialog(this, "Nome deve ser informado.");
+        }
+    }
+
     private List<Produto> listarProduto() {
         return this.produtoController.listar();
     }
@@ -198,5 +232,9 @@ public class ProdutoCategoriaFrame extends JFrame {
         this.textoNome.setText("");
         this.textoDescricao.setText("");
         this.comboCategoria.setSelectedIndex(0);
+    }
+
+    private void limparCategoria() {
+        this.textoNomeCategoria.setText("");
     }
 }
