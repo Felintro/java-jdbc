@@ -24,18 +24,7 @@ public class TestaListagemDeCategorias {
 
             List<Categoria> listaDeCategorias = categoriaDAO.findCategoriaJoinProduto();
             listaDeCategorias.stream()
-                .forEach(
-                    ct -> {
-                        System.out.println(ct.getId() + " - " + ct.getNome());
-                        for(Produto produto : ct.getProdutos()) {
-                            System.out.println(ct.getNome() + " - " + produto.getNome());
-                        }
-                    }
-                );
+                .forEach(e -> System.out.println(e.toString()));
         }
-
     }
-
-
-
 }
