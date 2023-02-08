@@ -44,4 +44,5 @@ public class ProdutoController {
 		produtoDAO.updateProdutoById(id, novoNome, novaDescricao);
 		System.out.println("Produto alterado com sucesso!");
 	}
+
 }

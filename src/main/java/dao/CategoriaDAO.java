@@ -50,7 +50,6 @@ public class CategoriaDAO {
         }
     }
 
-
     public List<Categoria> findAllCategorias() {
         try {
             List<Categoria> categorias = new ArrayList<>();

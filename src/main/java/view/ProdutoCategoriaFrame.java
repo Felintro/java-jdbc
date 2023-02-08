@@ -237,4 +237,5 @@ public class ProdutoCategoriaFrame extends JFrame {
     private void limparCategoria() {
         this.textoNomeCategoria.setText("");
     }
+
 }
