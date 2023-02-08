@@ -188,7 +188,7 @@ public class ProdutoCategoriaFrame extends JFrame {
         List<Produto> produtos = listarProduto();
         try {
             for(Produto produto : produtos) {
-                modelo.addRow(new Object[]{produto.getId(), produto.getNome(), produto.getDescricao(), produto.getCategoria()});
+                modelo.addRow(new Object[]{produto.getId(), produto.getNome(), produto.getDescricao()});
             }
         } catch(Exception e) {
             throw e;
